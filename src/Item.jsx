@@ -1,8 +1,7 @@
 import { ViewTransition } from 'react'
 
-export const Item = ({ item, toggleStatus, removeItem }) => {
-  return (
-    <ViewTransition>
+export const Item = ({ item, toggleStatus, removeItem, viewTransitionEnabled }) => {
+    const content = (
         <div
             className="card"
             style={{
@@ -59,6 +58,15 @@ export const Item = ({ item, toggleStatus, removeItem }) => {
                 </button>
             </div>
         </div>
-    </ViewTransition>
-  )
+    );
+
+    if (viewTransitionEnabled) {
+        return (
+            <ViewTransition>
+                {content}
+            </ViewTransition>
+        );
+    }
+    
+    return content;
 }

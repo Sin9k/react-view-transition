@@ -2,6 +2,7 @@ import { useState, startTransition, useCallback } from 'react'
 import './App.css'
 
 import { Item } from './Item';
+import { ViewTransitionToggle } from './ViewTransitionToggle';
 
 function App() {
   const [items, setItems] = useState([
@@ -11,6 +12,7 @@ function App() {
   ])
   const [nextId, setNextId] = useState(4)
   const [viewMode, setViewMode] = useState('grid') // 'grid' or 'list'
+  const [viewTransitionEnabled, setViewTransitionEnabled] = useState(true)
 
   const addItem = () => {
     startTransition(() => {
@@ -52,7 +54,12 @@ function App() {
           React ViewTransition Demo 🎨
         </h1>
 
-      <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', justifyContent: 'center' }}>
+      <ViewTransitionToggle 
+        enabled={viewTransitionEnabled}
+        onChange={setViewTransitionEnabled}
+      />
+
+      <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', justifyContent: 'center', flexWrap: 'wrap' }}>
         <button onClick={addItem} style={{ padding: '0.75rem 1.5rem' }}>
           ➕ Add Task
         </button>
@@ -71,7 +78,13 @@ function App() {
           }}
         >
           {items.map(item => (
-            <Item key={item.id} item={item} removeItem={removeItem} toggleStatus={toggleStatus} />
+            <Item
+              key={item.id}
+              item={item}
+              removeItem={removeItem}
+              toggleStatus={toggleStatus}
+              viewTransitionEnabled={viewTransitionEnabled}
+            />
           ))}
         </div>
     </div>
